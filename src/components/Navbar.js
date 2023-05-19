@@ -1,33 +1,87 @@
-import React from 'react'
+import React, { useState } from 'react';
 import './Navbar.css';
-import {CgProfile} from 'react-icons/cg'
-import Sample from './Sample';
-const Navbar = () => {
-  return (
-    <div>
-        <nav>
-            <a href="index.html">
-            <svg id="logo-35" width="50" height="39" viewBox="0 0 50 39" fill="none" xmlns="http://www.w3.org/2000/svg"> <path d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z" class="ccompli1" fill="#007AFF"></path> <path d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z" class="ccustom" fill="#312ECB"></path> </svg>
-            </a>
-            <div className='ul'>
-               <ul className='navbar'>
-                    <li><a href={<Sample />}>PRODUCTS</a></li>
-                    <li><a href="index.html">ORDERS</a></li>
-                    <li><a href="index.html">PAYMENT</a></li>
-                   
-               </ul>
-               <ul>
-                  <li><a href='index.html' className='profile'><CgProfile /></a></li>
-               </ul>
-            </div>
-            {/* <div id='mobile'>
-              <i id='bar' className={this.state.clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
-                <i className='fas fa-bars'></i>
-                <i className='fas fa-times'></i>
-            </div> */}
-        </nav>
-    </div>
-  )
-}
+import { CgProfile } from 'react-icons/cg';
+import Sample from './Products';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
-export default Navbar
+const Navbar = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  return (
+    <>
+      <nav>
+        <Link href="index.html">
+          <svg id="logo-35" width="50" height="39" viewBox="0 0 50 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z" class="ccompli1" fill="#007AFF"></path>
+            <path d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z" class="ccustom" fill="#312ECB"></path>
+          </svg>
+        </Link>
+        <div className='ul'>
+          <ul className='navbar'>
+            <li>
+              <div className='dropdown'>
+                <Link to="/products" onClick={toggleDropdown}>
+                  PRODUCTS
+                  <i className={isDropdownOpen ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
+                </Link>
+                {isDropdownOpen && (
+                  <div className='dropdown-content'>
+                    <Link to="/products">Add New Product</Link>
+                    <Link to="/products">View/Edit</Link>
+                    {/* <Link to="/products">Product 3</Link> */}
+                  </div>
+                )}
+              </div>
+            </li>
+            
+            <li>
+              <div className='dropdown'>
+                <Link to="/orders" onClick={toggleDropdown}>
+                  ORDERS
+                  <i className={isDropdownOpen ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
+                </Link>
+                {isDropdownOpen && (
+                  <div className='dropdown-content'>
+                    <Link to="/products">View All Orders</Link>
+                    {/* <Link to="/products">View/Edit</Link> */}
+                    {/* <Link to="/products">Product 3</Link> */}
+                  </div>
+                )}
+              </div>
+            </li>
+            <li>
+              <div className='dropdown'>
+                <Link to="/payment" onClick={toggleDropdown}>
+                  PAYMENT
+                  <i className={isDropdownOpen ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
+                </Link>
+                {isDropdownOpen && (
+                  <div className='dropdown-content'>
+                    <Link to="/products">View All Transactions</Link>
+                    <Link to="/products">Withdraw</Link>
+                    {/* <Link to="/products">View/Edit</Link> */}
+                    {/* <Link to="/products">Product 3</Link> */}
+                  </div>
+                )}
+              </div>
+            </li>
+          </ul>
+          <ul>
+            <li><Link to='profile' className='profile'><CgProfile /></Link></li>
+          </ul>
+        </div>
+      </nav>
+      <Routes>
+        {/* <Route exact path='/products' element={<Sample />} /> */}
+        {/* <Route exact path='/orders' element={<Sample />} /> */}
+        {/* <Route exact path='/payment' element={<Sample />} /> */}
+      </Routes>
+    </>
+  );
+};
+
+export default Navbar;
