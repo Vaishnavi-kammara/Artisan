@@ -5,10 +5,18 @@ import Sample from './Products';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
 const Navbar = () => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isDropdownOpenPro, setisDropdownOpenPro] = useState(false);
+  const [isDropdownOpenOrd, setisDropdownOpenOrd] = useState(false);
+  const [isDropdownOpenPay, setisDropdownOpenPay] = useState(false);
 
   const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+    setisDropdownOpenPro(!isDropdownOpenPro);
+  };
+  const toggleDropdownOrd = () => {
+    setisDropdownOpenOrd(!isDropdownOpenOrd);
+  };
+  const toggleDropdownPay= () => {
+    setisDropdownOpenPay(!isDropdownOpenPay);
   };
 
   return (
@@ -26,9 +34,9 @@ const Navbar = () => {
               <div className='dropdown'>
                 <Link to="/products" onClick={toggleDropdown}>
                   PRODUCTS
-                  <i className={isDropdownOpen ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
+                  <i className={isDropdownOpenPro ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
                 </Link>
-                {isDropdownOpen && (
+                {isDropdownOpenPro && (
                   <div className='dropdown-content'>
                     <Link to="/products">Add New Product</Link>
                     <Link to="/products">View/Edit</Link>
@@ -40,11 +48,11 @@ const Navbar = () => {
             
             <li>
               <div className='dropdown'>
-                <Link to="/orders" onClick={toggleDropdown}>
+                <Link to="/orders" onClick={toggleDropdownOrd}>
                   ORDERS
-                  <i className={isDropdownOpen ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
+                  <i className={isDropdownOpenOrd ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
                 </Link>
-                {isDropdownOpen && (
+                {isDropdownOpenOrd && (
                   <div className='dropdown-content'>
                     <Link to="/products">View All Orders</Link>
                     {/* <Link to="/products">View/Edit</Link> */}
@@ -55,11 +63,11 @@ const Navbar = () => {
             </li>
             <li>
               <div className='dropdown'>
-                <Link to="/payment" onClick={toggleDropdown}>
+                <Link to="/payment" onClick={toggleDropdownPay}>
                   PAYMENT
-                  <i className={isDropdownOpen ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
+                  <i className={isDropdownOpenPay ? 'fas fa-caret-up' : 'fas fa-caret-down'}></i>
                 </Link>
-                {isDropdownOpen && (
+                {isDropdownOpenPay && (
                   <div className='dropdown-content'>
                     <Link to="/products">View All Transactions</Link>
                     <Link to="/products">Withdraw</Link>
