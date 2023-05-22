@@ -3,6 +3,7 @@ import './Navbar.css';
 import { CgProfile } from 'react-icons/cg';
 import Sample from './Products';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import AddNewProduct from './products/AddNewProduct';
 
 const Navbar = () => {
   const [isDropdownOpenPro, setisDropdownOpenPro] = useState(false);
@@ -38,8 +39,8 @@ const Navbar = () => {
                 </Link>
                 {isDropdownOpenPro && (
                   <div className='dropdown-content'>
-                    <Link to="/products">Add New Product</Link>
-                    <Link to="/products">View/Edit</Link>
+  
+                    <Link to="/edit">View/Edit</Link>
                     {/* <Link to="/products">Product 3</Link> */}
                   </div>
                 )}
@@ -80,11 +81,12 @@ const Navbar = () => {
           </ul>
           <ul>
             <li><Link to='profile' className='profile'><CgProfile /></Link></li>
+            
           </ul>
         </div>
       </nav>
       <Routes>
-        {/* <Route exact path='/products' element={<Sample />} /> */}
+        <Route exact path='/edit' element={<AddNewProduct />} />
         {/* <Route exact path='/orders' element={<Sample />} /> */}
         {/* <Route exact path='/payment' element={<Sample />} /> */}
       </Routes>

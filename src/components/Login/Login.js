@@ -34,7 +34,7 @@ const Login = () => {
   <input type="phone" class="form-control" id="phonenum" placeholder="1234567890"/>
 </div>
  <div className='pass'>
-<label for="Password" class="form-label">Password</label>
+<label for="Password" class="form-label">OTP</label>
 <br/>
   <input type="password" class="form-control" id="pass" placeholder="**********"/>
  </div>
