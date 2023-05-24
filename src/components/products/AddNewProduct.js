@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { FaPlus } from 'react-icons/fa';
+import axios from 'axios';
 import './AddNewProduct.css';
 
 const AddNewProduct = () => {
@@ -20,7 +21,9 @@ const AddNewProduct = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('products', JSON.stringify(products));
+    axios.get('http://localhost:8089/api/products/getAll').then(response=>setProducts(response.data));
+    console.log(products);
+    // localStorage.setItem('products', JSON.stringify(products));
   }, [products]);
 
   const handleMouseEnter = (index) => {
@@ -44,6 +47,10 @@ const AddNewProduct = () => {
     setImageSize(size);
   };
 
+  // const postData=(e)=>{
+  //   e.preventDefault();
+
+  // }
   const handleSubmit = (event) => {
     event.preventDefault();
     const newProduct = {
@@ -52,6 +59,14 @@ const AddNewProduct = () => {
       price,
       imageSize
     };
+    const addProduct=
+    {
+      "product_title":title,
+      "status":1,
+      "product_price":price,
+      "product_description":"description",
+      "product_url":imageUrl
+    }
 
     setProducts([...products, newProduct]);
     setImageUrl('');
@@ -59,6 +74,12 @@ const AddNewProduct = () => {
     setPrice('');
     setImageSize(200);
     setEditing(false);
+
+  axios.post('http://localhost:8089/api/products/postProduct',addProduct).then(response=>{
+    console.log(response.data);
+  }).catch(error=>{
+    console.log(error);
+  })
   };
 
   const handleDeleteClick = (index) => {
@@ -82,7 +103,7 @@ const AddNewProduct = () => {
               <label htmlFor="imageSize">Image Size:</label>
               <input type="number" id="imageSize" name="imageSize" value={imageSize} onChange={handleImageSizeChange} />
               <div className="form-buttons">
-                <Button color="primary" type="submit">
+                <Button color="primary" type="submit" >
                   Save
                 </Button>
                 <Button color="secondary" onClick={handleClose}>
@@ -102,7 +123,7 @@ const AddNewProduct = () => {
                   onMouseEnter={() => handleMouseEnter(index)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <img alt="Sample" src={product.imageUrl} style={{ width: `${product.imageSize}px` }} />
+                  <img alt="Sample" src={product.product_url} style={{ width: "200px" }} />
                   {hovered === index && (
                     <div className="image-overlay">
                       <Button color="primary" className="overlay-button">
@@ -115,9 +136,9 @@ const AddNewProduct = () => {
                   )}
                 </div>
                 <CardBody>
-                  <CardTitle tag="h5">{product.title}</CardTitle>
+                  <CardTitle tag="h5">{product.product_title}</CardTitle>
                   <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    {product.price}
+                    {product.product_price}
                   </CardSubtitle>
                 </CardBody>
               </Card>

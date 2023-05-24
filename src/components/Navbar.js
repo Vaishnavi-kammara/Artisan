@@ -91,6 +91,7 @@ const Navbar = () => {
         {/* <Route exact path='/payment' element={<Sample />} /> */}
       </Routes>
     </>
+    
   );
 };
 
